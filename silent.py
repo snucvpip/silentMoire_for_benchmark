@@ -33,6 +33,8 @@ if __name__ == '__main__':
         print('usage: python silent.py <INPUT IMAGE>')
         exit(0)
 
+    tag = sys.argv[1].split('/')[2]
+
     img_orig = cv2.imread(sys.argv[1])
     img_true = cv2.imread(sys.argv[2])
 
@@ -44,7 +46,7 @@ if __name__ == '__main__':
     print(img_gray.shape)
 
     # Choose and apply filter functions
-    filter_options = filter_menu()
+    # filter_options = filter_menu()
 
     filters = {
         1: src.filters.median,
@@ -59,11 +61,11 @@ if __name__ == '__main__':
 
     filter_name = ['Median', 'Cut', 'Low pass', 'Bandstop']
 
-    for filter_opt in filter_options:
+    for filter_opt in [1]:
         start = time.time()
 
         img_gray_filtered = filters[filter_opt](img_gray_filtered)
-        cv2.imwrite('output_' + filter_name[filter_opt - 1] + '.png', img_gray_filtered)
+        cv2.imwrite(tag + '_output_' + filter_name[filter_opt - 1] + '.png', img_gray_filtered)
         img_gray_filtered = cv2.resize(img_gray_filtered, (500, 500), interpolation=cv2.INTER_LINEAR)
 
         end = time.time()
